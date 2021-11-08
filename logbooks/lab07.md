@@ -1,5 +1,4 @@
 ## Lab 07 - Configuration
-http://hmarco.org/jslinux/vm.html?url=buildroot-x86_vfsync_lab07.cfg&lab=07&mem=512
 
 1. *Describe what happened*
 
