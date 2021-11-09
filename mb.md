@@ -1,5 +1,3 @@
-https://hmarco.org/jslinux/vm.html?url=buildroot-x86_vfsync_labs.cfg&lab=01&mem=512
-
 website login:
 username:   student
 password:   usa2020
