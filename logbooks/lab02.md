@@ -1,19 +1,13 @@
-## Practical 2
+## Lab 02 - Managing Files & Permissions
 
-M. Crabtree - B00841451 - 22/10/21
-
----
-
-1. *Identify and note the line in /etc/mtab that contains the mount-information
-associated with the disk device.*
+1. *Identify and note the line in `/etc/mtab` that contains the mount-information associated with the disk device.*
 
 ```bash
 [root@UWS ~]# cat /etc/mtab | grep floppy
 /dev/loop0 /media/floppy ext2 rw,relatime,errors=continue 0 0
 ```
 
-2. *Note down the outputs of the commands `ls –l /dev/loop0` and `ls –l
-/media/floppy`. Compare the outputs and comment on what is actually achieved by the mount command that you have just performed.*
+2. *Note down the outputs of the commands `ls –l /dev/loop0` and `ls –l /media/floppy`. Compare the outputs and comment on what is actually achieved by the mount command that you have just performed.*
 
 ```bash
 [root@UWS ~]# ls -l /dev/loop0
@@ -28,8 +22,7 @@ The floppy disk image has been attached to `/dev/loop0` which, in turn, is mount
 
 The difference between the outputs stems from the fact that the disk image is mounted *via* the loop device onto `/media/floppy`, the logical point at which the contents of the image are mounted onto the overall filesystem.
 
-3. *After mounting the virtual floppy, has /etc/fstab changed as well, or are all
-entries still the same?*
+3. *After mounting the virtual floppy, has `/etc/fstab` changed as well, or are all entries still the same?*
 
 No changes. `fstab` defines filesystems to be mounted at boot, and *how* they're integrated as part of the overall filesystem.
 
@@ -37,9 +30,9 @@ No changes. `fstab` defines filesystems to be mounted at boot, and *how* they're
 
 If mounted, the kernel may try to perform read or write operations on the target media. Unmounting the media ensures there is no risk of the operating system accessing the device and interfering with the creation of a new filesystem.
 
-5. *How many inodes and blocks are created on the system?*
+5. *How many `inodes` and `blocks` are created on the system?*
 
-Assuming "the system" refers to the overal filesystem:
+Assuming "the system" refers to the system as a whole:
 
 ```bash
 [root@UWS ~]# df / -P
@@ -55,7 +48,7 @@ Filesystem           1024-blocks    Used Available Capacity Mounted on
 
 5% of the total capacity is reserved by the root user to prevent the system from failing if or when it runs out of available space. In this instance, 5% of 1,048,576 blocks is ~52,429 blocks.
 
-7. *Manually run the program fsck on the virtual floppy. What is displayed by fsck?*
+7. *Manually run the program `fsck` on the virtual floppy. What is displayed by `fsck`?*
 
 Given that the filesystem is mounted at present: 
 
@@ -89,8 +82,7 @@ drwx------    2 root     root         12288 Sep 13  2020 lost+found
 -rw-r--r--    1 root     root            11 Sep 21 10:37 tst.dat
 ```
 
-9. *Can you think of any apocalyptic scenario that might produce an entry in the
-lost+found directory?*
+9. *Can you think of any apocalyptic scenario that might produce an entry in the `lost+found` directory?*
 
 An improper shutdown might result in orphaned inodes, or if a block device experiences some kind of hardware failure.
 
@@ -100,7 +92,7 @@ Pending IO operations should complete before a filesystem is unmounted. Linux, f
 
 11. *Use the command cd /root, before issuing the command line umount /media/floppy again. Does the un-mounting operation work now?*
 
-Yes.
+Yes!
 
 ```bash
 [root@UWS ~]# cd /root
@@ -124,11 +116,11 @@ nfsd on /proc/fs/nfsd type nfsd (rw,relatime)
 
 The mount point we used to access the image in the overall filesystem is a directory we created. Devices, virtual or otherwise, are usually mounted onto empty directories by convention.
 
-13. *Explain why you no longer see the previous files lost+found and tst.dat on the mount-point?*
+13. *Explain why you no longer see the previous files `lost+found` and `tst.dat` on the mount-point?*
 
 Because we've unmounted the image and its contained filesystem from the overall filesystem.
 
-14. *Explain the difference between the two command lines given. What does the  re-direction operator > do?*
+14. *Explain the difference between the two command lines given. What does the  re-direction operator `>` do?*
 
 ```bash
 [root@UWS ~]# echo '1234567890' test.dat
@@ -136,7 +128,7 @@ Because we've unmounted the image and its contained filesystem from the overall 
 [root@UWS ~]# echo '1234567890' > test.dat
 ```
 
-- The first command is doing little more than supplying standard input to the `echo` programme, and `echo` is doing what it does: redrecting standard input to standard output.
+- The first command is doing little more than supplying standard input arguments to the `echo` programme, and `echo` is doing what it does: re-direct standard input to standard output.
 - The second command uses the `>` redirection character which redirects the standard input on the left to a designated file on the right. The file is created if it doesn't already exists, and if it does, the content of the file is overwritten.
 
 15. *(After performing the `mv` command) What happened to the original `test.dat` file?*
@@ -152,7 +144,7 @@ drwxr-xr-x    2 root     root            37 Sep 21 13:01 Desktop
 
 When using `mv` without specifying an alternate directory `mv` acts as though the file has been renamed. The inode of the file has not changed, instead the name of the directory entry associated with that inode has been modified.
 
-16. *Examine the file test_01.dat with the cat command. What does the operator `>>` do?*
+16. *Examine the file `test_01.dat` with the `cat` command. What does the operator `>>` do?*
 
 ```bash
 [root@UWS ~]# echo 'abcdefghi' >> test_01.dat
@@ -161,7 +153,7 @@ When using `mv` without specifying an alternate directory `mv` acts as though th
 abcdefghi
 ```
 
-The `>>` operator has appended the standard output of `echo` to the designated file.
+The `>>` operator appends standard output of `echo` to the designated file.
 
 17. *Based on the commands shown above: Explain the effect of the `–i` qualifier in the `cp` command.*
 
@@ -177,7 +169,7 @@ cp: overwrite 'test_b.dat'?
 
 There is no output, indicating that there are no differences between the two files specified.
 
-19. *What is the output of the above cmp command now and why?*
+19. *What is the output of the above `cmp` command now and why?*
 
 ```bash
 [root@UWS ~]# echo 'ei caramba' >> test_a.dat
@@ -382,7 +374,7 @@ wheel:x:10:root,student
 | :---------: | :---: | :---: |
 | read, write | read  | read  |
 
-30. *How did the permission, user- and group-ownership change? Describe in your own words what user, group and world are allowed to do with the file. What is achieved by the commands chgrp and chown?*
+30. *How did the permission, user- and group-ownership change? Describe in your own words what user, group and world are allowed to do with the file. What is achieved by the commands `chgrp` and `chown`?*
 
 ```bash
 [root@UWS ~]# ls -l test_a.dat
@@ -399,7 +391,7 @@ wheel:x:10:root,student
 - `chgrp` modified the file's designated group ownership, from `root` to `www-data`.
 - `chown` modified the file's designated owner from `root` to `student`.
 
-31. *Is a permission of 7 (in octal notation) a good idea to enable for world-access?*
+31. *Is a permission of `7` (in octal notation) a good idea to enable for world-access?*
 
 No. Any user with filesystem access can execute a file with `world` permissions set to 7.
 
@@ -426,7 +418,7 @@ drwxr-xr-x    2 root     root            37 Sep 22 10:29 temp11
 | read, write, execute | read, execute | read, execute |
 
 
-35. * Which directory permission will allow you to create a files inside of it ? (eg: executing touch and echo commands)*
+35. * Which directory permission will allow you to create a files inside of it ? (eg: executing `touch` and `echo` commands)*
 
 We can find out by cycling through the permissions, making a directory, assigning ownership to `root`, and setting full, read, read permissions:
 ```bash
@@ -487,11 +479,11 @@ Finally, adding execute permissions to the `group`, `student` is able to finally
 
 Execute.
 
-37. *Which directory permission is necessary to run a shell-script located insede of it ? (a shell script is an ASCII code!)*
+37. *Which directory permission is necessary to run a shell-script located inside of it ? (a shell script is an ASCII code!)*
 
 It depends. `source myscript.sh` requires read permissions. In the instance of executing using `./myscript.sh` the kernel will abort execution after parsing a shebang `#!` if the user does not have execute permissions on that script.
 
-38. *Interpret the machine response to this command based on your knowledge about the permissions of the directory. Does the setting of 733 allow `ls` to be performed?*
+38. *Interpret the machine response to this command based on your knowledge about the permissions of the directory. Does the setting of `733` allow `ls` to be performed?*
 
 The permissions granted to the directory means that user `student` cannot read the contents of `temp11`.
 
@@ -510,7 +502,7 @@ drwx-wx-wx    2 root     root            91 Sep 22 10:29 .
 -- snip --
 ```
 
-39. *Write down the kernel response for each of the 3 ‘more’-command lines given below.*
+39. *Write down the kernel response for each of the three `more`-command lines given below.*
 
 ```bash
 [root@UWS ~]# more /root/temp11/test_a.dat
@@ -521,7 +513,7 @@ Donuts
 more: /root/temp11/test_c.dat: No such file or directory
 ```
 
-40. *Write down the response of the kernel to each of the 3 ‘cp’-command given above.*
+40. *Write down the response of the kernel to each of the three `cp`-command given above.*
 
 ```bash
 [root@UWS ~]# cp /root/temp11/test_a.dat /home/student
@@ -539,7 +531,7 @@ drwx-wx-wx    2 root     root          91 Sep 22 10:29 temp11
 
 Student has execute permissions which allow for the use of any file inside a directory but the user must specifiy an exact file name.
 
-42. *Can you create a file that can be copied by group and world users, residing in a directory with a permission setting of 700?*
+42. *Can you create a file that can be copied by group and world users, residing in a directory with a permission setting of `700`?*
 
 Given the permissions of the directory, no.
 
@@ -564,7 +556,7 @@ cp: cant stat '/root/temp11/q42.file': Permission denied
 - `no_download`: 700 allowing full permissions for the owner and no permissions for group or world.
 - Anonymous servers allow for the sharing of files without having to create a user acocunt every time someone new wants to downlload a file. Permissions can be carefully configured to ensure only certain actions can be performed.
 
-44. *Based on your fresh experience: Which of the following permission settings in octal representation are potentially dangerous when assigned to a directory: 700, 033, 633, 644, 755? Comment on each one individually.*
+44. *Based on your fresh experience: Which of the following permission settings in octal representation are potentially dangerous when assigned to a directory: `700, 033, 633, 644, 755`? Comment on each one individually.*
 
 - `700` creates a directory which is essenaitlly non-existent for anyone except the owner.
 - `033` defines a directory with zero permissions for the owner, and write and execute permissions for groups and the public. This allows for the creation, renaming, deletion of files, potentially disastrous, but without read permissions someone would need to know the names of the files they wanted to interact with ahead of time. Unwise for the owner to have zero permissions.

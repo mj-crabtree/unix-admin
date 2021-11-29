@@ -1,8 +1,4 @@
-# Practical 3
-
-M. Crabtree - B00414581 - 02/10/2021
-
----
+## Lab 03 - Filesystem Hierarchy & User Management
 
 1. Name the different directories under the `/` directory
 
@@ -187,11 +183,11 @@ The content of the file is redirected from standard output, the default behaviou
 hello world
 ```
 
-15. *If stderr is the standard channel for displaying error messages. Where is stderr directed to?*
+15. *If `stderr` is the standard channel for displaying error messages. Where is `stderr` directed to?*
 
 Since the terminal functions in terms of text streams, and `stderr` outputs to standard output, `stderr` directs output to standard output as default behaviour.
 
-16. *What is the meaning of the -l qualifier in the grep command?*
+16. *What is the meaning of the `-l` qualifier in the `grep` command?*
 
 `grep -l` will only output matching filenames.
 
@@ -301,7 +297,7 @@ fsck: /sbin/fsck.ext4 /sbin/fsck /sbin/fsck.ext2 /sbin/fsck.ext3 /usr/share/man/
 It does not.
 
 ```sh
-[student@UWS ~]$ sudo find /var | grep libreoffice
+[student@UWS ~]$ sudo find /var -name 'libreoffice'
 [student@UWS ~]$ 
 ```
 
@@ -328,7 +324,7 @@ It appears that the file is a place for kernel messages, information about the s
 
 26. *What information is given about the unsuccessful login attempt? Could you identify the hacking culprit at once?*
 
-From `man ps | grep ruser`:
+From `man ps`:
 
 > ruser ... real user ID.  This will be the textual user ID, if it can be obtained and the field width permits, or a decimal representation otherwise.
 
@@ -343,7 +339,7 @@ student:x:1000:1000:Linux User,,,:/home/student:/bin/bash
 
 User `student` failed to switch user to root at 12:35:38 on the 2nd October.
 
-27. *How does the tail command compare to the more command?*
+27. *How does the `tail` command compare to the more command?*
 
 `more` reads the entire input file before paging thorugh its content. `less` performs much the same functionality without the need to read the entire file. It also allows for a command mode which gives users opportunities to interact with the content, i.e. sending a file to `less` and searching for a specific pattern.
 
@@ -371,7 +367,7 @@ kcore: ELF 32-bit LSB core file Intel 80386, version 1 (SYSV), SVR4-style, from 
 
 It's the kernel core!
 
-29. What is the link between the PID of the running processes and the directory names within `/proc`?
+29. What is the link between the `PID` of the running processes and the directory names within `/proc`?
 
 There is a direct relationship in that there is a directory in `/proc` for each process ID running at the time. Consider the following example:
 
@@ -392,12 +388,8 @@ student   1401  1117  0 14:26 hvc0     00:00:00 grep sleep
 [student@UWS ~]$ ls -lah /proc | grep 1399
 dr-xr-xr-x    8 student  student        0 Oct  2 14:26 1399
 [student@UWS ~]$ ls /proc/1399
-auxv             cpuset           gid_map          mounts           oom_score_adj    schedstat        status
-cgroup           cwd              limits           mountstats       pagemap          setgroups        syscall
-clear_refs       environ          map_files        net              personality      smaps            task
-cmdline          exe              maps             ns               projid_map       stack            timerslack_ns
-comm             fd               mem              oom_adj          root             stat             uid_map
-coredump_filter  fdinfo           mountinfo        oom_score        sched            statm            wchan
+auxv             cpuset           gid_map          mounts           oom_score_adj
+-- snip --
 [student@UWS ~]$ kill 1399
 [2]-  Terminated              sleep 600
 [student@UWS ~]$ ls /proc/1399
@@ -411,7 +403,7 @@ ls: /proc/1399: No such file or directory
 
 30. *What do you think will happen to each directory in /proc after the associated process has been killed?*
 
-I think that when a process is killed its corresponding directory entry in `/proc` will no longer exist.
+When a process is killed its corresponding directory entry in `/proc` will no longer exist.
 
 31. *What is written in the `cmdline` file? Does this agree with the information as given by the command, `ps -ef`?*
 
@@ -442,7 +434,7 @@ drwx------    2 root     root         12288 Sep 13  2020 lost+found
 
 35. *Why is the actual password depicted as `x`, although the password is not `x`?*
 
-This indicastes that the password is encrypted as part of `/etc/shadow`.
+This indicates that the password is encrypted as part of `/etc/shadow`.
 
 36. *What is the user identification (UID), home directory and login shell of the root-user?*
 
@@ -455,7 +447,7 @@ root:x:0:0:root:/root:/bin/sh
 - `/root`
 - `/bin/sh`
 
-37. *What is the UID of the daemon called `uucp`?*
+37. *What is the `UID` of the daemon called `uucp`?*
 
 ```sh
 [student@UWS /]$ grep uucp /etc/passwd
@@ -474,7 +466,7 @@ student:x:1000:1000:Linux User,,,:/home/student:/bin/bash
 
 There appears to be no entry for `uucp` as part of the list of users.
 
-38. *Determine the UID of student in the Debian system.*
+38. *Determine the `UID` of student in the Debian system.*
 
 `1000`
 

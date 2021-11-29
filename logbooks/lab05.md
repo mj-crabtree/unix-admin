@@ -1,6 +1,6 @@
-## Lab 05
+## Lab 05 - The Shell
 
-1. *How many variables are currently defined in your shell? (Tip: use wc -l)*
+1. *How many variables are currently defined in your shell? (Tip: use `wc -l`)*
 
 ```sh
 [student@UWS ~]$ printenv | wc -l
@@ -15,9 +15,9 @@ LOGNAME=student
 PATH=/usr/local/bin:/bin:/usr/bin
 ```
 
-Display does not appear to be set at this time.
+`DISPLAY` does not appear to be set at this time.
 
-3. *To which directory does the cd command set you now?*
+3. *To which directory does the `cd` command set you now?*
 
 ```sh
 student@UWS ~]$ cd
@@ -71,7 +71,7 @@ cp: /bin/cp /usr/share/man/man1/cp.1.gz
 /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 ```
 
-Any directoris containing system binaries are omitted from the student user's path given that programmes in these binaries run themselves as root.
+Any directories containing system binaries are omitted from the student user's path given that programmes in these binaries run themselves as root.
 
 9. *What is the output if you try to run `ipmine`?*
 
@@ -88,9 +88,9 @@ Any directoris containing system binaries are omitted from the student user's pa
 `PATH=$PATH:.` assigns the current value of `$PATH` along with a colon and the present working directory to the `PATH` variable.
 `export PATH` defines a shell environment variable which allows functions and parameters to be called in the current session.
 
-11. *Does ipmine run now? If ‘yes’ explain why.*
+11. *Does `ipmine` run now? If ‘yes’ explain why.*
 
-Yes. the path environment variable has been updated to include the present working directory. We invoke the command and the shell searches for an appropriate binary within the path variable. It's found, so it's run.
+Yes. the path environment variable has been updated to include the present working directory. We invoke the command and the shell searches for an appropriate binary within the path variable. It was found, so it was run.
 
 12. *What command provides the same output as `echo *` ?*
 
@@ -143,35 +143,35 @@ In each statement the text within the backticks will be evaluated by the shell a
 
 The semicolon indicates the end of a complete statement. Anything following a semicolon will be interpreted by the shell as a new, independent statement. 
 
-22. *Would the script envdisplay run without a change of the permission settings? Note the current permission settings in octal representation.
+22. *Would the script `envdisplay` run without a change of the permission settings? Note the current permission settings in octal representation.
 
 No, given the lack of entry in the permission bit for the current user. The octal value is `644`
 
-23. *Note the new permission settings of envdisplay , after the chmod command was issued, in octal representation. Why is the script executable now?*
+23. *Note the new permission settings of `envdisplay`, after the `chmod` command was issued, in octal representation. Why is the script executable now?*
 
 The new permissions octal value is `755`. Permission bits have been granted to the file and can now be executed.
 
-24. *Explain the output of envdisplay.*
+24. *Explain the output of `envdisplay`.*
 
 The content of `envdisplay` is a series of commands which will print the content of several environment variables to standard out.
 
-25. *Explain why you should only see the line ‘I did something wrong’, if your script does not perform as intended.*
+25. *Explain why you should only see the line `I did something wrong`, if your script does not perform as intended.*
 
 `||` between two commands ensures that the second command will only execute if the first command fails to execute appropriately.
 
-26. *Explain the output of envdisplay. In particular, why does the first invocation of envdisplay not produce the string test, yet the second one does?*
+26. *Explain the output of `envdisplay`. In particular, why does the first invocation of `envdisplay` not produce the string test, yet the second one does?*
 
-The first command is simply evaluated as a string and passed as an argument to the script to evaluate, which it will, as a string. Prefacint the variable name with a `$` symbol indicates a variable whose associated value should be evaluated and passed into the script.
+The first command is simply evaluated as a string and passed as an argument to the script to evaluate, which it will, as a string. Prefacing the variable name with a `$` symbol indicates a variable whose associated value should be evaluated and passed into the script.
 
-27. *What is the value of $HOME after the script has finished running? What has happened?*
+27. *What is the value of `$HOME` after the script has finished running? What has happened?*
 
-When a script is run the shell evaluates the shebang if one exists and spawns a new instance of that application, in our example, `/bin/bash/`. This new instance of bash runs and executes the script, and its environment variable is changed. When the script closes so too does that instance of bash, and the calling instanc eof bash remains untouched.
+When a script is run the shell evaluates the shebang if one exists and spawns a new instance of that application, in our example, `/bin/bash/`. This new instance of bash runs and executes the script, and its environment variable is changed. When the script closes so too does that instance of bash, and the calling instance of bash remains untouched.
 
-28. *What is the value of $HOME now? What happened?*
+28. *What is the value of `$HOME` now? What happened?*
 
 The current shell was used to execute the script which means the `$HOME` environment variable has been set to `/etc/`.
 
-29. *Besides /insecure and /home/crazy are there any other unprotected directories? Try with at least one other insecure permission (766, 733 or 722).*
+29. *Besides `/insecure` and `/home/crazy` are there any other unprotected directories? Try with at least one other insecure permission (`766, 733` or `722`).*
 
 ```sh
 [root@UWS /]# find ./ -type d -perm 777 -print
@@ -181,11 +181,11 @@ The current shell was used to execute the script which means the `$HOME` environ
 ./insecure
 ```
 
-30. *What does the -perm in the find qualifier do?*
+30. *What does the `-perm` in the find qualifier do?*
 
-It searches for files, directories by a given set of permissions.
+It searches for files and directories by a given set of permissions.
 
-31. *What would be the find command line to change the directories from 777 to 755?*
+31. *What would be the find command line to change the directories from `777` to `755`?*
 
 ```sh
 [student@UWS /]$ find ./ -type d -perm 777 -exec chmod 755 {} \;
@@ -203,13 +203,12 @@ The only difference was the speed in execution which, I imagine, is due to the d
 
 The directories which were found to have insecure permissions octal values had theri values changed to reflect the `-exec` argument and its subsequent command. The second run yielded no results given the lack of candidate files.
 
-35. *Given a PID and nice number will renice a process with the given PID to the given nice number. This should be a one line shell-script using two input variables $1 and $2, representing the nice number and the PID of the process. Try it out with your cruncher script.*
-	
+35. *Given a PID and nice number will `renice` a process with the given PID to the given nice number. This should be a one line shell-script using two input variables `$1` and `$2`, representing the nice number and the PID of the process. Try it out with your cruncher script.*
 ```sh
 renice $1 $2
 ```
 
-36. *Try to get the script to find the required PID if provided with only a process name only and a nice number.*
+36. *Try to get the script to find the required `PID` if provided with only a process name only and a nice number.*
 
 ```sh
 renice $1 `pidof $2`

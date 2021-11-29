@@ -1,8 +1,10 @@
-# Practical 1
+# Unix System Administration Logbook
 
-M. Crabtree - B00414581 - 14/10/21
+_Matthew Crabtree, B00414581, November 2021_
 
 ---
+
+## Lab 01 - Introduction & Basic Commands
 
 1. *Name and explain one qualifier selected by you for each of the three commands*
 	1. `ls -h` prints human readable file sizes (e.g. 1K, 2G, etc.) when used in conjunction with `-s` and `l`
@@ -32,8 +34,7 @@ student
 
    `df` reports file system disk space usage; It displays the amount of free space available on a file system matching the name argument. 
 
-4. *What are the names of the different filesystems that are displayed? What is the mount-*
-   *point for the filesystem source beginning /dev/root?*
+4. *What are the names of the different filesystems that are displayed? What is the mount-point for the `filesystem` source beginning `/dev/root`?*
 
 ```bash
 [student@UWS ~]$ df
@@ -59,9 +60,9 @@ tmpfs
 /dev/sda1
 ```
 
-- `/dev/root` is mounted on the root directory.
+- `/dev/root` is mounted on the root directory `/`.
 
-5. *What do the Used and Available columns stand for?*
+5. *What do the `Used` and `Available` columns stand for?*
 
 `Used` is the number of used blocks on a system, and `Available` shows the number of available blocks. Blocks can be set to units of 1024 bytes, an overridden value using `-BG`, or 512 bytes if `POSIXLY_CORRECT` is set.
 
@@ -76,9 +77,7 @@ tmpfs
 - `file1` is zero bytes in size
 - `file2` is 20 bytes in size
 
-8. *Use the pwd command to find out what happened and in which directory you currently*
-   *reside? What is the meaning of the double dot `..` if used in conjunction with the cd*
-   *command?*
+8. *Use the `pwd` command to find out what happened and in which directory you currently reside? What is the meaning of the double dot `..` if used in conjunction with the `cd` command?*
 
 ```bash
 [student@UWS subdir]$ cd ..		# change pwd to the parent directory
@@ -141,5 +140,5 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/root              1048576    137428    911148  13% /
 ```
 
-1. If the question is how many filesystems are mounted on the root dorectory, i.e. `/` then the answer is one: `/dev/root`
+1. If the question is how many filesystems are mounted on the root directory, i.e. `/` then the answer is one: `/dev/root`
 2. If, on the other hand, the question is how many filesystems are _contained within_ `/` then the answer is four including `/dev/root`, given that `/dev`, `/tmp`, and `/run` are mount points for filesystems contained within immediate subdirectories within `/`

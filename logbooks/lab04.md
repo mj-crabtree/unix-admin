@@ -1,8 +1,4 @@
-## Lab 04
-
-- Monitoring processes: ps, vmstat, pstree, top, and uptime
-- Prioritising processes: nice, renice
-- Configuring the cron facility: crontab
+## Lab 04 - Process Management
 
 1. *What is the difference between `ps` and `ps -ef`?*
 
@@ -56,7 +52,7 @@ student    247   192  0 20:09 hvc0     00:00:00 grep student
 
 44
 
-6. *What is the PID of the terminal and the nano process?*
+6. *What is the `PID` of the terminal and the `nano` process?*
 
 ```sh
 [student@UWS ~]$ nano &
@@ -73,11 +69,11 @@ student    247   192  0 20:09 hvc0     00:00:00 grep student
 - nano: 253
 - bash: 192
 
-7. *What is the function of the ampersand & in the above command?*
+7. *What is the function of the ampersand `&` in the above command?*
 
 `&` sends a process to the background.
 
-8. *What is the PID and PPID of the terminal and the two processes nano and vi? What is the relation between the calling terminal shell and the two processes?*
+8. *What is the PID and PPID of the terminal and the two processes `nano` and `vi`? What is the relation between the calling terminal shell and the two processes?*
 
 ```sh
 [student@UWS ~]$ ps -ef | grep -e nano -e vi
@@ -87,7 +83,7 @@ student    255   192  0 20:16 hvc0     00:00:01 vi
 
 `nano` and `vi` have PIDs 253 and 255 respectively, and they both share PPID 192, which is the PID of `bash`
 
-9. *Did this kill the process vi?*
+9. *Did this kill the process `vi`?*
 
 ```sh
 [student@UWS ~]$ kill 255; ps -fu student
@@ -100,7 +96,7 @@ student    275   192  0 20:20 hvc0     00:00:00 ps -fu student
 
 No.
 
-10. *Use the man kill command and check for the meaning of the qualifier -9 to find out why the process has been killed this time?*
+10. *Use the `man kill` command and check for the meaning of the qualifier `-9` to find out why the process has been killed this time?*
 
 `-9` represents a `KILL` signal, which unconditionally and immediately halts the execution of a programme.
 
@@ -116,7 +112,7 @@ student    205   201  0 09:54 hvc0     00:00:00 grep top
 - PIDs: 200, 199
 - PPIDs: 202, 201
 
-12. *What happened to the two top processes? Were they killed too? What is the new PPID of the two top processes? Can you therefore explain what happens to orphaned processes?*
+12. *What happened to the two `top` processes? Were they killed too? What is the new `PPID` of the two `top` processes? Can you therefore explain what happens to orphaned processes?*
 
 ```sh
 [student@UWS ~]$ ps -ef | grep top
@@ -147,11 +143,11 @@ If any of the `top` processes had been orphaned and adopted by `init` we'd see t
 
 13. *Describe the output that you see. How much approximate CPU time (in %) does the cruncher program use while it is still running?*
 
-![[Pasted image 20211005120713.png]]
+![image-20211129141049773](/home/mc/Documents/uni/unix-sysadmin/logbooks/lab04.assets/image-20211129141049773.png)
 
 `top` appears in the terminal window with a cascading series of processes stemming from `init`, leading to `cruncher` and `top`, before a series of processes related to `[kthreadd]` appears. In CPU time %, `cruncher` appears to use between 3-5%.
 
-14. *In what order does the top command display the processes?*
+14. *In what order does the `top` command display the processes?*
 
 `top` displays processes in %CPU descending in a tree format, i.e. a `cruncher`, when using significant CPU time, will appear as a child of `init`. If `cruncher` is the most intensive process running at the time, `init` will appear at the top of the list despite its current %CPU reading of ~0.
 
@@ -173,7 +169,7 @@ When a process is killed it informs its parent of its pending termination. If th
 
 17. *What is the priority number of the program cruncher? Does it change at all?*
 
-20, and the priority value does not appear to change throughout the programme's lifetime.
+`20`, and the priority value does not appear to change throughout the programme's lifetime.
 
 18. *What is the highest priority that any of the processes gets assigned?*
 
@@ -186,13 +182,15 @@ When a process is killed it informs its parent of its pending termination. If th
 
 20. *Is any swap space used at this time?*
 
+![image-20211129141049773](/home/mc/Documents/uni/unix-sysadmin/logbooks/lab04.assets/image-20211129141049773.png)
+
 `0.0GiB`
 
-21. *Explain briefly what kind of information vmstat displays here? What do the two qualifiers: 10 and 4 stand for?*
+21. *Explain briefly what kind of information `vmstat` displays here? What do the two qualifiers: `10` and `4` stand for?*
 
 Statistics pertaining to the system's virtual memory. `vmstat n` will cause the programme to refresh every `n` seconds, where 10 is every ten seconds, and 4 is every four seconds.
 
-22. *What numbers change in the vmstat display? What does the number in the `r` column represent?*
+22. *What numbers change in the `vmstat` display? What does the number in the `r` column represent?*
 
 With a number of `cruncher` programmes executing in the background:
 - columns `r, in, cs, us, sy,`, and `id` all change at least once.
@@ -218,7 +216,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 
  It rests at zero.
 
- 25. *What information does uptime provide?*
+ 25. *What information does `uptime` provide?*
 
 ```sh
 [root@UWS ~]# uptime
@@ -261,9 +259,9 @@ A clumsy way of performing this would be to find the process ID of some programm
 
 They're all 0.
 
-29. *What is the nice number (NI) given by the system to the cruncher script?*
+29. *What is the nice number `NI` given by the system to the cruncher script?*
 
-20.
+`20`
 
 30. *Note the actual outputs for real, user and sys times for the cruncher script after it has finished executing.*
 
@@ -283,11 +281,11 @@ user    0m4.453s
 sys     0m9.710s
 ```
 
-This second command was able to perform 0.671s faster than the previous command, possibly due to the increased processor time enjoyed by the process as a result of the reduction in nice value.
+This second command was able to perform `0.671s` faster than the previous command, possibly due to the increased processor time enjoyed by the process as a result of the reduction in nice value.
 
 32. *Why do you think, user and sys time are not so different when compared to the values obtained after the first run of cruncher?*
 
-The processing time is the factor affected by the reduction in the process' nice value, the time it takes for the system to read the file and the time it takes to process system calls will be the same. 
+The processing time is the factor affected by the reduction in the process' `nice` value, the time it takes for the system to read the file and process system calls will be the same regardless of the `nice` value.
 
 33. *Note the actual outputs for real, user and sys time again. Comment on any improvement in performance.*
 
@@ -299,9 +297,9 @@ sys     0m9.965s
 [root@UWS ~]#
 ```
 
-There was no real effect on performance, presumably because there are so few active processes running on the system.
+There was no real effect on performance, presumably because there are so few active processes running on the system. Altering the `nice` value will only have significant impact on a busy system.
 
-35. *Note the actual outputs of the time command for real, user and sys. How do the time differences between nice 19 and nice -20 compare to the time differences on a quiet system?*
+35. *Note the actual outputs of the time command for real, user and sys. How do the time differences between `nice 19` and `nice -20` compare to the time differences on a quiet system?*
 
 ```sh
 [root@UWS ~]# time nice -n 19 ./cruncher > /dev/null &
@@ -320,7 +318,7 @@ sys     0m9.770s
 
 The `nice -20` command completed roughly twice as fast as the `nice 19` command.
 
-36. *Note the output of the renice command.*
+36. *Note the output of the `renice` command.*
 
 ```sh
 [root@UWS ~]# time nice -n 19 ./cruncher > /dev/null &
@@ -337,11 +335,11 @@ sys     0m9.481s
 
 After reconfiguring the nice value, the process runs about twice as fast as it would with its initial nice value.
 
-38. *Which file contains a list of users who are allowed to submit requests to the crontab facility?*
+38. *Which file contains a list of users who are allowed to submit requests to the `crontab` facility?*
 
 If it exists, `cron.allow`.
 
-39. *Which file contains a list of users who are NOT allowed to submit request to the crontab facility? If a user’s name appears in both lists, which list takes precedence?*
+39. *Which file contains a list of users who are NOT allowed to submit request to the `crontab` facility? If a user’s name appears in both lists, which list takes precedence?*
 
 `cron.deny`, and `cron.allow` respectively.
 
@@ -370,11 +368,11 @@ This command lists the sizes of a directory and its subdirectory in a given unit
 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 * * * * du -k /home | sort -nr | head -5 >> /root/test.dat
 ```
 
-43. *What happens to the size of /root/test.dat over time? Do you see any danger in having a steadily growing output file in a directory?*
+43. *What happens to the size of `/root/test.dat` over time? Do you see any danger in having a steadily growing output file in a directory?*
 
 The cronjob uses the append operator `>>`, meaning every five minutes another five lines will be added to the file, an disk space, while cheap, is finite!
 
-44. *What would be the entry in /tmp/entries to perform the command once every day at 23:15?*
+44. *What would be the entry in `/tmp/entries` to perform the command once every day at `23:15`?*
 
 ```sh
 15 23 * * * du -k /home | sort -nr | head -5 >> /root/test.dat
@@ -386,13 +384,13 @@ The cronjob uses the append operator `>>`, meaning every five minutes another fi
 30 16 21 1 * du -k /home | sort -nr | head -5 >> /root/test.dat
 ```
 
-46. *Find an alternative cron syntax that could be used to specify that a job be performed every 5 minutes. Note the alternative notation as the answer in your logbook.*
+46. *Find an alternative `cron` syntax that could be used to specify that a job be performed every 5 minutes. Note the alternative notation as the answer in your logbook.*
 
 ```sh
 */5 * * * * * du -k /home | sort -nr | head -5 >> /root/test.dat
 ```
 
-47. *In which different time-periods are the system cron-jobs ordered?*
+47. *In which different time-periods are the system `cron`-jobs ordered?*
 
 ```sh
 [root@UWS etc]# ls -lah | grep cron
@@ -408,7 +406,7 @@ drwxr-xr-x    2 root     root          37 Nov 11  2020 cron.weekly
 - monthly
 - weekly
 
-48. *Note an example of a cron-job service task that is found in the cron.daily directory.*
+48. *Note an example of a `cron`-job service task that is found in the `cron.daily` directory.*
 
 ```sh
 [root@UWS etc]# ls -lah cron.daily/
@@ -419,6 +417,6 @@ drwxr-xr-x   17 root     root        1.3K Dec 10  2020 ..
 
 There aren't any!
 
-49. *What is the exact meaning of the -r character in the crontab -r command line?*
+49. *What is the exact meaning of the `-r` character in the `crontab -r` command line?*
 
 The -r option causes the current crontab to be removed.

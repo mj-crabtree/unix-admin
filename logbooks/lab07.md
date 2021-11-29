@@ -138,7 +138,7 @@ rtt min/avg/max/mdev = 0.000/0.000/0.000/0.000 ms
    Active: inactive (dead) since Fri 2021-11-05 14:19:11 UTC; 1min 30s ago
      Docs: man:systemd-networkd.service(8)
   Process: 91 ExecStart=/usr/lib/systemd/systemd-networkd (code=exited, status=0/SUCCESS)
- Main PID: 91 (code=exited, status=0/SUCCESS)
+ Main `PID`: 91 (code=exited, status=0/SUCCESS)
    Status: "Shutting down..."
  
 Nov 05 13:09:48 UWS systemd[1]: Starting Network Service...
@@ -182,12 +182,13 @@ The question posits that the system will boot into runlevel 2 though this doesn'
 **The Kernel**
 - the root filesystem is mounted
 	- specified in `grub.conf`
-- `init` is executed with a pid of 1
+- `init` is executed with a `PID` of 1
 	- the kernel is initialised by `init`
 	- `initrd` is a ram based filesystem used by the kernel until a full filesystem is mounted
 	- this partition also allows for necessary drivers to be utilised allowing access to hardware, including drive partitions
 
-**`init`**
+**init**
+
 - On `init` based systems, the `inittab` file is read and the run level is determined
 - The default run level specifies the applications required in order to achieve that status
 - Generally speaking, the default run level on servers is 3, and 5 for GUI environments
@@ -197,17 +198,17 @@ The question posits that the system will boot into runlevel 2 though this doesn'
 - Services are loaded in accordance with their sequence number
 	- e.g. a process with a sequence number of 15 will run before another with a sequecne number of 35
 
-13. *Stop and start again the dropbear service and verify that it is running. Check again the PID address and compare it against the previous one. Which PID value is higher?*
+13. *Stop and start again the `dropbear` service and verify that it is running. Check again the `PID` address and compare it against the previous one. Which `PID` value is higher?*
 
 The previous value was 138, the new value is 158. The new value is higher.
 
-14. *Why the PID assigned*
+14. *Why the `PID` assigned*
 
-The question is unclear, but when a new process is generated the system adds the value of `1` to the current process count until it reaches the maximum PID value determined by `/proc/sys/kernel/pid_max`
+The question is unclear, but when a new process is generated the system adds the value of `1` to the current process count until it reaches the maximum `PID` value determined by `/proc/sys/kernel/pid_max`
 
-15. *Is which situation the PID number assigned can be smaller?*
+15. *Is which situation the `PID` number assigned can be smaller?*
 
-Once the PID value has reached the maximum the system will begin assigning PIDs again from zero, unless there are `pid_max` number of concurrent processes running.
+Once the `PID` value has reached the maximum the system will begin assigning `PID`s again from zero, unless there are `pid_max` number of concurrent processes running.
 
 16. *Run the `pwd` command again and indicate the current directory.*
 
