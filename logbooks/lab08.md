@@ -1,4 +1,5 @@
 ## Lab 08 - Networking
+
 1. *Although in this virtual environment we only have on single machine “under the same network”, what could be the reason to allocate a random MAC address in a virtual environment of more than one virtual machine? Consider what would happen if the same value was in use by more than one system.*
 
 More than one MAC address would wreak havoc at layer two: neither of the virtual machines would be able to network effectively as a result of collision, packet loss. Duplicate MAC addresses are fine as long as they're separated by a router.
@@ -14,7 +15,7 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 14  bytes 2295 (2.2 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
- 
+
 lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         inet 127.0.0.1  netmask 255.0.0.0
         loop  txqueuelen 1000  (Local Loopback)
@@ -99,7 +100,7 @@ The question makes no sense given the answer to question 7.
 
 9. *Do you see an output? if not, review the network settings or restart the virtual machine.*
 
-```sh
+```bash
 [root@UWS ~]# ping 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=116 time=168 ms
